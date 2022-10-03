@@ -12,8 +12,7 @@ const LoginForm = () => {
   const onFinish = async (values) => {
     try {
       setIsFormSubmitting(true)
-      const { data } = await axios.post('/login', values)
-      localStorage.setItem('accessToken', data.accessToken)
+      await axios.post('/login', values)
       navigate('/')
     } catch (error) {
       const errorMessage = error.response.data.message
@@ -23,19 +22,8 @@ const LoginForm = () => {
     }
   }
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
-    <Form
-      name="basic"
-      layout="vertical"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
+    <Form layout="vertical" onFinish={onFinish} autoComplete="off">
       <Form.Item
         label="Email"
         name="email"
