@@ -13,8 +13,8 @@ const Registration = () => {
   }, [])
 
   return (
-    <div className="login-container">
-      <div className="login-form-container">
+    <div className="registration-container">
+      <div className="registration-form-container">
         <Title>Sign up</Title>
         <RegistrationForm />
         <p>

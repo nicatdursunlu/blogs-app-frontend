@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input, message, Upload } from 'antd'
-import { GoogleOutlined, UploadOutlined } from '@ant-design/icons'
+import {
+  GoogleOutlined,
+  UploadOutlined,
+  LockOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 
 import axios from 'lib/axios'
 
@@ -54,36 +59,42 @@ const RegistrationForm = () => {
         name="firstName"
         rules={[{ required: true, message: 'Please enter your first name!' }]}
       >
-        <Input />
+        <Input placeholder="First name" />
       </Form.Item>
       <Form.Item
         label="Last name"
         name="lastName"
         rules={[{ required: true, message: 'Please enter your last name!' }]}
       >
-        <Input />
+        <Input placeholder="Last name" />
       </Form.Item>
       <Form.Item
         label="Email"
         name="email"
         rules={[{ required: true, message: 'Please enter your email!' }]}
       >
-        <Input type="email" />
+        <Input
+          type="email"
+          placeholder="someone@example.com"
+          prefix={<UserOutlined />}
+        />
       </Form.Item>
       <Form.Item
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please enter your password!' }]}
       >
-        <Input.Password />
+        <Input.Password placeholder="Password" prefix={<LockOutlined />} />
       </Form.Item>
       <Form.Item
         label="Profile picture"
         name="image"
         getValueFromEvent={normFile}
       >
-        <Upload beforeUpload={() => false}>
-          <Button icon={<UploadOutlined />}>Add image</Button>
+        <Upload block beforeUpload={() => false}>
+          <Button block icon={<UploadOutlined />}>
+            Add Image
+          </Button>
         </Upload>
       </Form.Item>
 
@@ -98,8 +109,8 @@ const RegistrationForm = () => {
         </Button>
       </Form.Item>
       <Form.Item>
-        <Button icon={<GoogleOutlined />} block htmlType="submit">
-          Sing In With Google
+        <Button type="primary" danger icon={<GoogleOutlined />} block>
+          Sign Up With Google
         </Button>
       </Form.Item>
     </Form>

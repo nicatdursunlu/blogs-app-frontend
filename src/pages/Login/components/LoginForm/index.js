@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Form, Input, message } from 'antd'
-import { GoogleOutlined } from '@ant-design/icons'
+import { GoogleOutlined, UserOutlined, LockOutlined } from '@ant-design/icons'
 
 import axios from 'lib/axios'
 
@@ -41,14 +41,18 @@ const LoginForm = () => {
         name="email"
         rules={[{ required: true, message: 'Please enter your email!' }]}
       >
-        <Input type="email" />
+        <Input
+          placeholder="someone@example.com"
+          prefix={<UserOutlined />}
+          type="email"
+        />
       </Form.Item>
       <Form.Item
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please enter your password!' }]}
       >
-        <Input.Password />
+        <Input.Password placeholder="Password" prefix={<LockOutlined />} />
       </Form.Item>
       <Form.Item>
         <Button
@@ -61,8 +65,8 @@ const LoginForm = () => {
         </Button>
       </Form.Item>
       <Form.Item>
-        <Button icon={<GoogleOutlined />} block htmlType="submit">
-          Sing In With Google
+        <Button type="primary" danger icon={<GoogleOutlined />} block>
+          Sign In With Google
         </Button>
       </Form.Item>
     </Form>
