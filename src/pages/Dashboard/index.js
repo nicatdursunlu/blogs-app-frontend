@@ -1,5 +1,11 @@
+import ProtectedRoute from 'components/ProtectedRoute'
+
 const Dashboard = () => {
-  return <h1>Dashboard page</h1>
+  return (
+    <ProtectedRoute>
+      <h1>Dashboard page</h1>
+    </ProtectedRoute>
+  )
 }
 
 export default Dashboard

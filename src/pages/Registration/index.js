@@ -1,11 +1,16 @@
-import { Typography } from 'antd'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Typography } from 'antd'
 
 import RegistrationForm from './components/RegistrationForm'
 import './styles.css'
 
 const Registration = () => {
   const { Title } = Typography
+
+  useEffect(() => {
+    window.onbeforeunload = () => 'Are you sure?!'
+  }, [])
 
   return (
     <div className="login-container">
