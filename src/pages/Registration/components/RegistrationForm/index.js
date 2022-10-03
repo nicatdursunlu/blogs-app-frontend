@@ -82,7 +82,7 @@ const RegistrationForm = () => {
         name="image"
         getValueFromEvent={normFile}
       >
-        <Upload>
+        <Upload beforeUpload={() => false}>
           <Button icon={<UploadOutlined />}>Add image</Button>
         </Upload>
       </Form.Item>
