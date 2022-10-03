@@ -1,32 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import axios from 'lib/axios'
+import { setCurrentUser, setLoading } from 'redux/features/usersSlice'
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate()
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
+
+  const { loading } = useSelector((state) => state.user)
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        setLoading(true)
+        dispatch(setLoading(true))
         const { data } = await axios.get('me')
         if (!data) {
           navigate('/auth/login')
         } else {
-          setUser(data)
+          setCurrentUser(data)
         }
       } catch (error) {
         navigate('/auth/login')
       } finally {
-        setLoading(false)
+        dispatch(setLoading(false))
       }
     }
 
     getUserInfo()
-  }, [navigate])
+  }, [navigate, dispatch])
 
   if (loading) {
     return <h1>Authorizing...</h1>
