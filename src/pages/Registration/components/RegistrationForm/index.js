@@ -1,23 +1,32 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Form, Input, message } from 'antd'
-import { GoogleOutlined } from '@ant-design/icons'
+import { Button, Form, Input, message, Upload } from 'antd'
+import { GoogleOutlined, UploadOutlined } from '@ant-design/icons'
 
 import axios from 'lib/axios'
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const navigate = useNavigate()
   const [isFormSubmitting, setIsFormSubmitting] = useState(false)
 
   const onFinish = async (values) => {
     try {
       setIsFormSubmitting(true)
-      const { data } = await axios.post('/login', values)
-      localStorage.setItem('accessToken', data.accessToken)
-      navigate('/')
+
+      const formData = new FormData()
+      formData.append('firstName', values.firstName)
+      formData.append('lastName', values.lastName)
+      formData.append('email', values.email)
+      formData.append('password', values.password)
+      formData.append('image', values.image.originFileObj)
+
+      await axios.post('/register', formData)
+      message.success('Registration is successful!')
+      navigate('/auth/login')
     } catch (error) {
       const errorMessage = error.response.data.message
       message.error(errorMessage)
+      console.log('message', message)
     } finally {
       setIsFormSubmitting(false)
     }
@@ -25,6 +34,10 @@ const LoginForm = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
+  }
+
+  const normFile = (event) => {
+    return event?.fileList[0]
   }
 
   return (
@@ -36,6 +49,20 @@ const LoginForm = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <Form.Item
+        label="First name"
+        name="firstName"
+        rules={[{ required: true, message: 'Please enter your first name!' }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="Last name"
+        name="lastName"
+        rules={[{ required: true, message: 'Please enter your last name!' }]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         label="Email"
         name="email"
@@ -50,6 +77,16 @@ const LoginForm = () => {
       >
         <Input.Password />
       </Form.Item>
+      <Form.Item
+        label="Profile picture"
+        name="image"
+        getValueFromEvent={normFile}
+      >
+        <Upload>
+          <Button icon={<UploadOutlined />}>Add image</Button>
+        </Upload>
+      </Form.Item>
+
       <Form.Item>
         <Button
           loading={isFormSubmitting}
@@ -57,7 +94,7 @@ const LoginForm = () => {
           type="primary"
           htmlType="submit"
         >
-          Sign in
+          Sign up
         </Button>
       </Form.Item>
       <Form.Item>
@@ -69,4 +106,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegistrationForm
