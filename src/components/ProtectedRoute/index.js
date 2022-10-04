@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
         if (!data) {
           navigate('/auth/login')
         } else {
-          setCurrentUser(data)
+          dispatch(setCurrentUser(data))
         }
       } catch (error) {
         navigate('/auth/login')
