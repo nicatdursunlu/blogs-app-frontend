@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 const Blogs = lazy(() => import('pages/Blogs'))
+const BlogCreate = lazy(() => import('pages/BlogCreate'))
 const Login = lazy(() => import('pages/Login'))
 const Registration = lazy(() => import('pages/Registration'))
 const Dashboard = lazy(() => import('pages/Dashboard'))
@@ -17,6 +18,7 @@ function App() {
 
         <Route path="/" element={<AppLayout />}>
           <Route path="blogs" element={<Blogs />} />
+          <Route path="blogs/create" element={<BlogCreate />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Route>

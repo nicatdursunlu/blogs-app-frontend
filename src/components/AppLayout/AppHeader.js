@@ -1,15 +1,17 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Avatar, Menu, Layout, Dropdown, Typography, Space } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 
+import { setCurrentUser } from 'redux/features/usersSlice'
 import axios from 'lib/axios'
 
 const AppHeader = () => {
   const { Header } = Layout
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const { firstName, lastName, image } = useSelector(
     (state) => state.user.currentUser || {}
@@ -50,6 +52,7 @@ const AppHeader = () => {
   const handleDropdownClick = async (event) => {
     if (event.key === 'logout') {
       await axios.post('logout')
+      dispatch(setCurrentUser(null))
       navigate('/auth/login')
     }
   }

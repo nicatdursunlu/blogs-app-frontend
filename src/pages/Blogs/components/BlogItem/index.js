@@ -1,8 +1,11 @@
 import React, { createElement } from 'react'
-import { Avatar, List, Space } from 'antd'
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
+import { Avatar, List, Space, Tag } from 'antd'
+import { LikeOutlined, MessageOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const BlogItem = ({ item }) => {
+  const MAX_CHAR_COUNT = 300
+
   const IconText = ({ icon, text }) => (
     <Space>
       {createElement(icon)}
@@ -14,7 +17,6 @@ const BlogItem = ({ item }) => {
     <List.Item
       key={item.title}
       actions={[
-        <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
         <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
         <IconText
           icon={MessageOutlined}
@@ -24,11 +26,20 @@ const BlogItem = ({ item }) => {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar src={item.avatar} />}
-        title={<a href={item.href}>{item.title}</a>}
-        description={item.description}
+        avatar={
+          <Avatar
+            src={process.env.REACT_APP_BACKEND_URL + '/' + item.author.image}
+          />
+        }
+        title={<Link to={`/blogs/${item._id}`}>{item.title}</Link>}
+        description={item.author.firstName + ' ' + item.author.lastName}
       />
-      {item.content}
+      {item.body.substring(0, MAX_CHAR_COUNT)}...
+      <div style={{ marginTop: '15px' }}>
+        {item.tags.map((tag) => (
+          <Tag key={tag}>{tag}</Tag>
+        ))}
+      </div>
     </List.Item>
   )
 }

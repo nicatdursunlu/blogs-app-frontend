@@ -1,7 +1,7 @@
 const breadcrumbs = {
   '/dashboard': ['Home', 'Dashboard'],
   '/blogs': ['Home', 'Blog'],
-  '/blogs/create': [],
+  '/blogs/create': ['Home', 'Create Blog'],
   '/chat': ['Home', 'Chat'],
 }
 
