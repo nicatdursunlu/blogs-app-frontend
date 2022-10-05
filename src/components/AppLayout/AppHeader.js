@@ -18,16 +18,16 @@ const AppHeader = () => {
 
   const navigationItems = [
     {
-      label: 'Dashboard',
-      to: 'dashboard',
+      key: 'dashboard',
+      label: <NavLink to="/dashboard">Dashboard</NavLink>,
     },
     {
-      label: 'Blogs',
-      to: 'blogs',
+      key: 'blogs',
+      label: <NavLink to="/blogs">Blogs</NavLink>,
     },
     {
-      label: 'Chat',
-      to: 'chat',
+      key: 'chat',
+      label: <NavLink to="/chat">Chat</NavLink>,
     },
   ]
 
@@ -56,26 +56,30 @@ const AppHeader = () => {
   return (
     <Header className="app-header">
       <div className="logo" />
-      <Menu className="app-navigation" theme="dark" mode="horizontal">
-        {navigationItems.map((item) => (
-          <NavLink key={item.to} to={item.to}>
-            <Menu.Item>{item.label}</Menu.Item>
-          </NavLink>
-        ))}
-      </Menu>
+      <Menu
+        className="app-navigation"
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={[window.location.pathname]}
+        items={navigationItems}
+      />
       <div className="user-info">
-        <Dropdown
-          trigger="click"
-          overlay={<Menu onClick={handleDropdownClick} items={dropdownItems} />}
-        >
-          <Typography.Text>
-            <Space>
-              <Avatar src={imageUrl} />
-              {firstName + ' ' + lastName}
-              <DownOutlined />
-            </Space>
-          </Typography.Text>
-        </Dropdown>
+        {image && (
+          <Dropdown
+            trigger="click"
+            overlay={
+              <Menu onClick={handleDropdownClick} items={dropdownItems} />
+            }
+          >
+            <Typography.Link>
+              <Space>
+                <Avatar src={imageUrl} />
+                {firstName + ' ' + lastName}
+                <DownOutlined />
+              </Space>
+            </Typography.Link>
+          </Dropdown>
+        )}
       </div>
     </Header>
   )

@@ -8,14 +8,12 @@ import { setCurrentUser, setLoading } from 'redux/features/usersSlice'
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const { loading } = useSelector((state) => state.user)
+  const { currentUser, loading } = useSelector((state) => state.user)
 
   useEffect(() => {
-    const getUserInfo = async () => {
+    async function getUserInfo() {
       try {
-        dispatch(setLoading(true))
-        const { data } = await axios.get('me')
+        const { data } = await axios.get('/me')
         if (!data) {
           navigate('/auth/login')
         } else {
@@ -28,8 +26,10 @@ const ProtectedRoute = ({ children }) => {
       }
     }
 
-    getUserInfo()
-  }, [navigate, dispatch])
+    if (!currentUser) {
+      getUserInfo()
+    }
+  }, [currentUser, navigate, dispatch])
 
   if (loading) {
     return <h1>Authorizing...</h1>
