@@ -10,6 +10,7 @@ const AppHeader = () => {
   const { Header } = Layout
 
   const navigate = useNavigate()
+
   const { firstName, lastName, image } = useSelector(
     (state) => state.user.currentUser || {}
   )
