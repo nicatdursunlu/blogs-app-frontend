@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { List } from 'antd'
+import { Button, Input, List } from 'antd'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 
 import ProtectedRoute from 'components/ProtectedRoute'
 import BlogItem from './components/BlogItem'
@@ -19,13 +21,27 @@ const Blogs = () => {
   return (
     <ProtectedRoute>
       <div className="blogs-container">
-        <List
-          itemLayout="vertical"
-          size="large"
-          loading={loading}
-          dataSource={list}
-          renderItem={(item) => <BlogItem item={item} />}
-        />
+        <div className="blog-actions">
+          <Input
+            style={{ width: '300px' }}
+            placeholder="Search blog"
+            prefix={<SearchOutlined />}
+          />
+          <Link to="/blogs/create">
+            <Button type="primary" icon={<PlusOutlined />}>
+              Add blog
+            </Button>
+          </Link>
+        </div>
+        <div style={{ marginTop: '20px' }}>
+          <List
+            itemLayout="vertical"
+            size="large"
+            loading={loading}
+            dataSource={list}
+            renderItem={(item) => <BlogItem item={item} />}
+          />
+        </div>
       </div>
     </ProtectedRoute>
   )

@@ -1,4 +1,13 @@
-.blogs-container {
-  max-width: 60%;
-  margin: 0 auto;
+.blog-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blogs-container .ant-list-item-meta-title {
+  margin-bottom: 0;
+}
+
+.blogs-container .ant-list-item-meta {
+  display: flex;
+  align-items: center;
 }
