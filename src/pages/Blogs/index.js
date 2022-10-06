@@ -6,17 +6,24 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 
 import ProtectedRoute from 'components/ProtectedRoute'
 import BlogItem from './components/BlogItem'
-import { fetchBlogs } from 'redux/features/blogsSlice'
+import { fetchBlogs, setCurrentPage } from 'redux/features/blogsSlice'
 import './styles.css'
+
+const LIMIT = 10
+const getBlogs = (state) => state.blogs
 
 const Blogs = () => {
   const dispatch = useDispatch()
-
-  const { list, loading } = useSelector((state) => state.blog)
+  const { list, loading, currentPage, total } = useSelector(getBlogs)
 
   useEffect(() => {
-    dispatch(fetchBlogs())
-  }, [dispatch])
+    const params = { page: currentPage, limit: LIMIT }
+    dispatch(fetchBlogs(params))
+  }, [dispatch, currentPage])
+
+  const handlePageChange = (page) => {
+    dispatch(setCurrentPage(page))
+  }
 
   return (
     <ProtectedRoute>
@@ -39,6 +46,11 @@ const Blogs = () => {
             size="large"
             loading={loading}
             dataSource={list}
+            pagination={{
+              onChange: handlePageChange,
+              pageSize: LIMIT,
+              total,
+            }}
             renderItem={(item) => <BlogItem item={item} />}
           />
         </div>

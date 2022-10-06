@@ -6,6 +6,6 @@ import blogReducer from './features/blogsSlice'
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    blog: blogReducer,
+    blogs: blogReducer,
   },
 })
