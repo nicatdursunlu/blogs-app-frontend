@@ -24,6 +24,15 @@ const blogsSlice = createSlice({
     setCurrentPage(state, action) {
       state.currentPage = action.payload
     },
+    toggleBlogLike(state, action) {
+      const { userId, blogId } = action.payload
+      const blog = state.list.find((blog) => blog._id === blogId)
+      if (blog.likes.includes(userId)) {
+        blog.likes = blog.likes.filter((uid) => uid !== userId)
+      } else {
+        blog.likes.push(userId)
+      }
+    },
   },
   extraReducers: {
     [fetchBlogs.pending]: (state) => {
@@ -42,6 +51,6 @@ const blogsSlice = createSlice({
   },
 })
 
-export const { setCurrentPage } = blogsSlice.actions
+export const { setCurrentPage, toggleBlogLike } = blogsSlice.actions
 
 export default blogsSlice.reducer
